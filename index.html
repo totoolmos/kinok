@@ -291,7 +291,7 @@ async function search() {
   document.getElementById('results-title').textContent = '"' + q + '"';
   document.getElementById('results-list').innerHTML = '<div class="loading">Buscando<span class="dots"></span></div>';
   try {
-    var url = '/api/search?q=' + encodeURIComponent(q) + (selLang ? '&lang=' + selLang : '');
+    var url = 'https://kinok-search.totin202209.workers.dev/?q=' + encodeURIComponent(q) + (selLang ? '&lang=' + selLang : '');
     var r = await fetch(url);
     var data = await r.json();
     if (data.error) { showErr(data.error); return; }
