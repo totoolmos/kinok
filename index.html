@@ -5,195 +5,557 @@
 <meta name="viewport" content="width=600, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Kinok</title>
 <style>
-* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-html, body {
-  background:#fff; color:#000;
-  font-family:'Georgia','Times New Roman',serif;
-  width:100%; max-width:600px;
-  margin:0 auto; min-height:100vh;
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+:root {
+  --black: #0a0a0a;
+  --white: #f7f5f0;
+  --gray1: #e8e4dc;
+  --gray2: #c8c3b8;
+  --gray3: #888070;
+  --gray4: #444038;
+  --accent: #1a1a1a;
+  --serif: 'Georgia', 'Times New Roman', serif;
+  --mono: 'Courier New', 'Courier', monospace;
 }
+
+html, body {
+  background: var(--white);
+  color: var(--black);
+  font-family: var(--serif);
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
 .screen { display:none; min-height:100vh; flex-direction:column; }
 .screen.active { display:flex; }
 
 /* ══ HOME ══ */
 #screen-home {
-  align-items:center; justify-content:center;
-  padding:48px 36px 36px;
+  align-items: stretch;
+  justify-content: flex-start;
+  padding: 0;
+  position: relative;
 }
-#logo {
-  width:230px; display:block;
-  margin:0 auto 6px; filter:grayscale(100%);
+
+.home-top {
+  padding: 52px 32px 32px;
+  border-bottom: 1.5px solid var(--black);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
-#logo-fb {
-  display:none; font-size:44px; font-weight:bold;
-  letter-spacing:6px; text-align:center; margin-bottom:6px;
+
+.kinok-wordmark {
+  font-size: 52px;
+  font-weight: bold;
+  letter-spacing: -1px;
+  line-height: 1;
+  margin-bottom: 4px;
 }
-.lema {
-  font-size:11px; letter-spacing:3px; text-transform:uppercase;
-  color:#888; text-align:center; margin-bottom:52px;
+
+.kinok-wordmark img {
+  height: 54px;
+  width: auto;
+  display: block;
+  filter: grayscale(100%) contrast(120%);
 }
-.divider { width:100%; border:none; border-top:1.5px solid #000; margin-bottom:36px; }
-.main-btn {
-  width:100%; padding:28px 20px; border:2px solid #000;
-  background:#fff; font-family:'Georgia',serif; font-size:22px;
-  font-weight:bold; letter-spacing:2px; text-align:center; cursor:pointer;
+
+.kinok-wordmark-text {
+  display: none;
+  font-size: 52px;
+  font-weight: bold;
+  letter-spacing: -1px;
 }
-.main-btn:active { background:#000; color:#fff; }
-.flex1 { flex:1; }
-.lang-row {
-  display:flex; width:100%; border:2px solid #000; margin-top:28px;
+
+.home-lema {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gray3);
+  margin-top: 6px;
 }
+
+.home-mid {
+  padding: 28px 32px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.section-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gray3);
+  margin-bottom: 14px;
+}
+
+.lang-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  border: 1.5px solid var(--black);
+  margin-bottom: 32px;
+}
+
 .lang-chip {
-  flex:1; padding:15px 0; text-align:center;
-  font-family:'Georgia',serif; font-size:14px;
-  border-right:1px solid #000; cursor:pointer;
-  letter-spacing:1px; font-weight:bold;
+  padding: 13px 0;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 1px;
+  border-right: 1px solid var(--black);
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.08s, color 0.08s;
+  user-select: none;
 }
-.lang-chip:last-child { border-right:none; }
-.lang-chip.sel { background:#000; color:#fff; }
-.lang-chip:active { background:#000; color:#fff; }
-.version {
-  font-size:10px; color:#ccc; letter-spacing:1px;
-  text-align:center; margin-top:18px;
+.lang-chip:last-child { border-right: none; }
+.lang-chip.sel, .lang-chip:active { background: var(--black); color: var(--white); }
+
+.search-trigger {
+  border: 1.5px solid var(--black);
+  padding: 22px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: background 0.08s, color 0.08s;
+  margin-bottom: 16px;
+}
+.search-trigger:active { background: var(--black); color: var(--white); }
+
+.search-trigger-text {
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.search-trigger-icon {
+  font-size: 28px;
+  line-height: 1;
+  opacity: 0.4;
+}
+
+.home-footer {
+  padding: 20px 32px;
+  border-top: 1px solid var(--gray1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.home-footer-brand {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--gray2);
+  text-transform: uppercase;
+}
+
+.home-footer-ver {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--gray2);
 }
 
 /* ══ PAGE HEADER ══ */
 .page-header {
-  padding:20px 22px 16px; border-bottom:2px solid #000;
-  display:flex; align-items:center; gap:14px; flex-shrink:0;
+  padding: 18px 22px;
+  border-bottom: 1.5px solid var(--black);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+  background: var(--white);
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
-.page-header h2 { font-size:22px; font-weight:bold; letter-spacing:1px; }
-.back { font-size:24px; cursor:pointer; padding:0 4px; line-height:1; }
-.back:active { opacity:0.4; }
 
-/* ══ SEARCH ══ */
-#screen-search { padding:0; }
+.page-header h2 {
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  flex: 1;
+}
+
+.back {
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--black);
+  cursor: pointer;
+  font-size: 14px;
+  flex-shrink: 0;
+  transition: background 0.08s, color 0.08s;
+}
+.back:active { background: var(--black); color: var(--white); }
+
+/* ══ SEARCH SCREEN ══ */
+#screen-search { padding: 0; }
+
 #search-display {
-  margin:20px 20px 12px; border:2px solid #000;
-  padding:14px 16px; font-size:24px;
-  font-family:'Georgia',serif; background:#f4f4f4;
-  min-height:58px; display:flex; align-items:center;
-  word-break:break-all; flex-shrink:0;
+  margin: 18px 18px 10px;
+  border: 1.5px solid var(--black);
+  padding: 14px 16px;
+  font-size: 22px;
+  font-family: var(--serif);
+  background: var(--gray1);
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  word-break: break-all;
+  flex-shrink: 0;
+  position: relative;
 }
+
 .cursor {
-  display:inline-block; width:2px; height:1.1em;
-  background:#000; animation:blink 1s step-end infinite; margin-left:3px;
+  display: inline-block;
+  width: 2px; height: 1em;
+  background: var(--black);
+  animation: blink 1s step-end infinite;
+  margin-left: 2px;
+  flex-shrink: 0;
 }
-@keyframes blink { 50%{opacity:0;} }
-.keyboard { padding:0 8px 8px; flex:1; display:flex; flex-direction:column; gap:5px; }
-.kb-row { display:flex; justify-content:center; gap:4px; }
+@keyframes blink { 50%{ opacity: 0; } }
+
+.keyboard {
+  padding: 0 8px 10px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.kb-row {
+  display: flex;
+  justify-content: center;
+  gap: 3px;
+}
+
 .key {
-  flex:1; max-width:52px; height:48px;
-  border:1.5px solid #000; background:#fff;
-  font-size:16px; font-family:'Georgia',serif; font-weight:bold;
-  display:flex; align-items:center; justify-content:center;
-  cursor:pointer; user-select:none; -webkit-user-select:none;
-  transition:none;
+  flex: 1;
+  max-width: 52px;
+  height: 46px;
+  border: 1px solid var(--black);
+  background: var(--white);
+  font-size: 15px;
+  font-family: var(--serif);
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: background 0.06s, color 0.06s;
+  color: var(--black);
 }
-.key:active { background:#000; color:#fff; }
-.key.wide { max-width:none; flex:2.2; font-size:12px; letter-spacing:0.5px; }
-.key.wider { max-width:none; flex:4; font-size:12px; }
-.key.go { background:#000; color:#fff; max-width:none; flex:2.2; font-size:12px; letter-spacing:1px; }
-.key.go:active { background:#444; }
+.key:active { background: var(--black); color: var(--white); }
+.key.wide  { max-width: none; flex: 2; font-size: 11px; letter-spacing: 0.5px; }
+.key.wider { max-width: none; flex: 3.5; font-size: 11px; letter-spacing: 1px; }
+.key.go    {
+  background: var(--black); color: var(--white);
+  max-width: none; flex: 2;
+  font-size: 11px; letter-spacing: 2px;
+  font-family: var(--mono);
+}
+.key.go:active { background: var(--gray4); }
 
 /* ══ RESULTS ══ */
-#screen-results { padding:0; }
-#results-list { flex:1; overflow-y:auto; }
+#screen-results { padding: 0; }
+#results-list { flex: 1; overflow-y: auto; }
+
 .result-item {
-  padding:18px 20px; border-bottom:1px solid #888; cursor:pointer;
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--gray1);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: background 0.08s;
 }
-.result-item:active { background:#000; color:#fff; }
-.result-item:active .rm { color:#ccc; }
-.rt { font-size:18px; font-weight:bold; margin-bottom:4px; line-height:1.3; }
-.rm { font-size:13px; color:#555; }
+.result-item:active { background: var(--black); color: var(--white); }
+.result-item:active .rm,
+.result-item:active .rfmt { color: var(--gray2); border-color: var(--gray2); }
+
+.rt {
+  font-size: 17px;
+  font-weight: bold;
+  line-height: 1.3;
+}
+
+.rm {
+  font-size: 12px;
+  color: var(--gray3);
+  font-family: var(--mono);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
 .rfmt {
-  display:inline-block; border:1px solid #000;
-  padding:1px 6px; font-size:11px; margin-right:6px;
-  font-weight:bold; letter-spacing:1px;
+  border: 1px solid var(--black);
+  padding: 1px 6px;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  font-family: var(--mono);
 }
+
+.result-author {
+  font-size: 13px;
+  color: var(--gray4);
+  font-style: italic;
+}
+
 .loading {
-  padding:60px 24px; text-align:center;
-  font-size:18px; color:#555; letter-spacing:1px;
+  padding: 70px 24px;
+  text-align: center;
+  font-size: 16px;
+  color: var(--gray3);
+  letter-spacing: 2px;
+  font-family: var(--mono);
+  text-transform: uppercase;
 }
+
 .dots::after {
-  content:''; animation:dots 1.4s steps(3,end) infinite;
+  content: '';
+  animation: dots 1.4s steps(3, end) infinite;
 }
 @keyframes dots { 0%{content:''} 33%{content:'.'} 66%{content:'..'} 100%{content:'...'} }
+
 .empty {
-  padding:50px 24px; text-align:center;
-  font-size:16px; color:#777; font-style:italic; line-height:1.9;
+  padding: 60px 28px;
+  text-align: center;
+  font-size: 15px;
+  color: var(--gray3);
+  font-style: italic;
+  line-height: 2;
+}
+
+.results-count {
+  padding: 10px 22px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--gray3);
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--gray1);
 }
 
 /* ══ BOOK ══ */
-#screen-book { padding:0; }
-.book-row {
-  display:flex; gap:16px;
-  padding:20px 20px 16px; border-bottom:1px solid #ddd; flex-shrink:0;
+#screen-book { padding: 0; overflow-y: auto; }
+
+.book-hero {
+  display: flex;
+  gap: 18px;
+  padding: 22px 22px 18px;
+  border-bottom: 1px solid var(--gray1);
 }
+
 .book-cover {
-  width:88px; height:130px; background:#e6e6e6;
-  border:1px solid #000; display:flex;
-  align-items:center; justify-content:center;
-  font-size:28px; flex-shrink:0;
+  width: 80px;
+  height: 114px;
+  background: var(--gray1);
+  border: 1px solid var(--black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
 }
-.book-info h3 { font-size:17px; margin-bottom:5px; line-height:1.3; }
-.book-author { font-size:13px; color:#555; margin-bottom:10px; }
-.book-tags { display:flex; gap:5px; flex-wrap:wrap; }
-.tag { border:1px solid #000; padding:2px 7px; font-size:11px; letter-spacing:0.5px; }
-.dl-label {
-  font-size:11px; letter-spacing:3px; text-transform:uppercase;
-  padding:14px 20px 10px; color:#555; border-bottom:1px solid #ddd;
+
+.book-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
+
+.book-meta { flex: 1; min-width: 0; }
+
+.book-title {
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 1.3;
+  margin-bottom: 6px;
+}
+
+.book-author-line {
+  font-size: 13px;
+  color: var(--gray4);
+  font-style: italic;
+  margin-bottom: 12px;
+}
+
+.book-tags {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.btag {
+  border: 1px solid var(--gray2);
+  padding: 2px 8px;
+  font-size: 10px;
+  letter-spacing: 1px;
+  font-family: var(--mono);
+  color: var(--gray4);
+}
+
+.book-description {
+  padding: 16px 22px;
+  border-bottom: 1px solid var(--gray1);
+  font-size: 13px;
+  color: var(--gray4);
+  line-height: 1.7;
+  font-style: italic;
+  display: none;
+}
+
+.dl-section-label {
+  padding: 16px 22px 10px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gray3);
+  border-bottom: 1px solid var(--gray1);
+}
+
+.dl-loading {
+  padding: 28px 22px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--gray3);
+  text-transform: uppercase;
+}
+
+#dl-buttons { display: flex; flex-direction: column; }
+
 .dl-btn {
-  display:flex; align-items:center; gap:12px;
-  padding:20px; border-bottom:1px solid #aaa;
-  font-size:19px; font-family:'Georgia',serif;
-  font-weight:bold; cursor:pointer; background:#fff; letter-spacing:1px;
+  display: flex;
+  align-items: center;
+  padding: 20px 22px;
+  border-bottom: 1px solid var(--gray1);
+  cursor: pointer;
+  gap: 14px;
+  transition: background 0.08s, color 0.08s;
+  text-decoration: none;
+  color: var(--black);
 }
-.dl-btn:active { background:#000; color:#fff; }
+.dl-btn:active { background: var(--black); color: var(--white); }
+.dl-btn:active .dl-sub { color: var(--gray2); }
+
+.dl-arrow {
+  font-size: 20px;
+  font-weight: bold;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.dl-info { flex: 1; min-width: 0; }
+
+.dl-label-text {
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  display: block;
+  margin-bottom: 2px;
+}
+
 .dl-sub {
-  font-size:12px; font-weight:normal; color:#777;
-  margin-left:auto; font-style:italic; letter-spacing:0;
+  font-size: 11px;
+  color: var(--gray3);
+  font-family: var(--mono);
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  max-width: 280px;
 }
-.dl-btn:active .dl-sub { color:#ccc; }
-.anna-btn {
-  margin:16px 20px; border:2px solid #000;
-  padding:17px; font-size:15px;
-  font-family:'Georgia',serif; text-align:center;
-  cursor:pointer; background:#fff; font-weight:bold;
+
+.anna-link {
+  margin: 18px 22px 28px;
+  border: 1.5px solid var(--black);
+  padding: 16px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  transition: background 0.08s, color 0.08s;
 }
-.anna-btn:active { background:#000; color:#fff; }
+.anna-link:active { background: var(--black); color: var(--white); }
+.anna-link-sub {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--gray3);
+  font-weight: normal;
+  letter-spacing: 1px;
+}
 </style>
 </head>
 <body>
 
-<!-- HOME -->
+<!-- ══ HOME ══ -->
 <div id="screen-home" class="screen active">
-  <img id="logo" src="https://i.ibb.co/C5XKQs8C/Proyecto-nuevo-10.png" alt="Kinok"
-       onerror="this.style.display='none';document.getElementById('logo-fb').style.display='block'">
-  <div id="logo-fb">KINOK</div>
-  <div class="lema">All the Books. Always With You.</div>
-  <hr class="divider">
-  <div class="main-btn" onclick="goTo('search')">⌕ &nbsp;Buscar libro</div>
-  <div class="flex1"></div>
-  <div class="lang-row">
-    <div class="lang-chip sel" data-lang="">Todo</div>
-    <div class="lang-chip" data-lang="es">ES</div>
-    <div class="lang-chip" data-lang="en">EN</div>
-    <div class="lang-chip" data-lang="pt">PT</div>
-    <div class="lang-chip" data-lang="fr">FR</div>
-    <div class="lang-chip" data-lang="de">DE</div>
+  <div class="home-top">
+    <div class="kinok-wordmark">
+      <img src="https://i.ibb.co/C5XKQs8C/Proyecto-nuevo-10.png" alt="Kinok"
+           onerror="this.style.display='none';document.querySelector('.kinok-wordmark-text').style.display='block'">
+      <span class="kinok-wordmark-text">KINOK</span>
+    </div>
+    <div class="home-lema">All the Books — Always With You</div>
   </div>
-  <div class="version">KINOK v1.0 — All the Books. Always With You.</div>
+
+  <div class="home-mid">
+    <div class="section-label">Idioma</div>
+    <div class="lang-grid">
+      <div class="lang-chip sel" data-lang="">Todo</div>
+      <div class="lang-chip" data-lang="es">ES</div>
+      <div class="lang-chip" data-lang="en">EN</div>
+      <div class="lang-chip" data-lang="pt">PT</div>
+      <div class="lang-chip" data-lang="fr">FR</div>
+      <div class="lang-chip" data-lang="de">DE</div>
+    </div>
+
+    <div class="section-label">Buscar</div>
+    <div class="search-trigger" onclick="goTo('search')">
+      <span class="search-trigger-text">Buscar libro</span>
+      <span class="search-trigger-icon">⌕</span>
+    </div>
+  </div>
+
+  <div style="flex:1"></div>
+  <div class="home-footer">
+    <span class="home-footer-brand">Kinok · Biblioteca</span>
+    <span class="home-footer-ver">v2.0</span>
+  </div>
 </div>
 
-<!-- SEARCH -->
+<!-- ══ SEARCH ══ -->
 <div id="screen-search" class="screen">
   <div class="page-header">
-    <span class="back" onclick="goTo('home')">◀</span>
-    <h2>Buscar</h2>
+    <div class="back" onclick="goTo('home')">◀</div>
+    <h2>Buscar libro</h2>
   </div>
-  <div id="search-display"><span id="qtext"></span><span class="cursor"></span></div>
+  <div id="search-display">
+    <span id="qtext"></span><span class="cursor"></span>
+  </div>
   <div class="keyboard">
     <div class="kb-row">
       <div class="key" data-c="q">Q</div><div class="key" data-c="w">W</div><div class="key" data-c="e">E</div><div class="key" data-c="r">R</div><div class="key" data-c="t">T</div><div class="key" data-c="y">Y</div><div class="key" data-c="u">U</div><div class="key" data-c="i">I</div><div class="key" data-c="o">O</div><div class="key" data-c="p">P</div>
@@ -208,46 +570,54 @@ html, body {
       <div class="key" data-c="1">1</div><div class="key" data-c="2">2</div><div class="key" data-c="3">3</div><div class="key" data-c="4">4</div><div class="key" data-c="5">5</div><div class="key" data-c="6">6</div><div class="key" data-c="7">7</div><div class="key" data-c="8">8</div><div class="key" data-c="9">9</div><div class="key" data-c="0">0</div>
     </div>
     <div class="kb-row">
-      <div class="key wide" data-c="APOS">&apos; &nbsp; -</div>
-      <div class="key wider" data-c="SPACE">ESPACIO</div>
-      <div class="key wide" data-c="DOT">. &nbsp; ,</div>
-      <div class="key go" data-c="SEARCH">BUSCAR</div>
+      <div class="key wide"  data-c="APOS">' &nbsp;—</div>
+      <div class="key wider" data-c="SPACE">espacio</div>
+      <div class="key wide"  data-c="DOT">. &nbsp;,</div>
+      <div class="key go"    data-c="SEARCH">buscar</div>
     </div>
   </div>
 </div>
 
-<!-- RESULTS -->
+<!-- ══ RESULTS ══ -->
 <div id="screen-results" class="screen">
   <div class="page-header">
-    <span class="back" onclick="goTo('search')">◀</span>
+    <div class="back" onclick="goTo('search')">◀</div>
     <h2 id="results-title">Resultados</h2>
   </div>
   <div id="results-list"></div>
 </div>
 
-<!-- BOOK -->
+<!-- ══ BOOK ══ -->
 <div id="screen-book" class="screen">
   <div class="page-header">
-    <span class="back" onclick="goTo('results')">◀</span>
+    <div class="back" onclick="goTo('results')">◀</div>
     <h2>Descargar</h2>
   </div>
-  <div class="book-row">
-    <div class="book-cover">📖</div>
-    <div id="book-info"></div>
+
+  <div class="book-hero">
+    <div class="book-cover" id="book-cover">📖</div>
+    <div class="book-meta" id="book-meta"></div>
   </div>
-  <div class="dl-label">Elegir formato</div>
-  <div class="dl-btn" onclick="dl('epub')">↓ EPUB<span class="dl-sub">recomendado Kindle</span></div>
-  <div class="dl-btn" onclick="dl('mobi')">↓ MOBI<span class="dl-sub">Kindle antiguo</span></div>
-  <div class="dl-btn" onclick="dl('azw3')">↓ AZW3<span class="dl-sub">nativo Amazon</span></div>
-  <div class="dl-btn" onclick="dl('pdf')">↓ PDF<span class="dl-sub">diseño fijo</span></div>
-  <div class="anna-btn" onclick="openAnna()">🔗 Ver en Anna's Archive</div>
+
+  <div class="book-description" id="book-description"></div>
+
+  <div class="dl-section-label">Fuentes de descarga</div>
+  <div id="dl-buttons">
+    <div class="dl-loading">Buscando links<span class="dots"></span></div>
+  </div>
+
+  <div class="anna-link" id="anna-link" onclick="openAnna()">
+    <span>Ver en Anna's Archive</span>
+    <span class="anna-link-sub">↗ abrir</span>
+  </div>
 </div>
 
 <script>
+var WORKER = 'https://kinok-search.totin202209.workers.dev';
 var q = '', selLang = '', selBook = null, results = [];
 
-// Lang chips
-document.querySelector('.lang-row').addEventListener('click', function(e) {
+// ── Lang chips ──────────────────────────────────────────────────────────────
+document.querySelector('.lang-grid').addEventListener('click', function(e) {
   var c = e.target.closest('.lang-chip');
   if (!c) return;
   document.querySelectorAll('.lang-chip').forEach(function(x){ x.classList.remove('sel'); });
@@ -255,46 +625,57 @@ document.querySelector('.lang-row').addEventListener('click', function(e) {
   selLang = c.dataset.lang;
 });
 
-// Screens
+// ── Screens ─────────────────────────────────────────────────────────────────
 function goTo(id) {
   document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
   document.getElementById('screen-' + id).classList.add('active');
   window.scrollTo(0, 0);
 }
 
-// Keyboard
+// ── Keyboard ─────────────────────────────────────────────────────────────────
 document.querySelector('.keyboard').addEventListener('click', function(e) {
   var k = e.target.closest('.key');
   if (!k) return;
   var c = k.dataset.c;
-  if (c === 'BACK') q = q.slice(0, -1);
-  else if (c === 'SPACE') q += ' ';
-  else if (c === 'DOT') q += '.';
-  else if (c === 'APOS') q += "'";
-  else if (c === 'SEARCH') { search(); return; }
-  else q += c.toLowerCase();
+  if      (c === 'BACK')   q = q.slice(0, -1);
+  else if (c === 'SPACE')  q += ' ';
+  else if (c === 'DOT')    q += '.';
+  else if (c === 'APOS')   q += "'";
+  else if (c === 'SEARCH') { doSearch(); return; }
+  else                     q += c.toLowerCase();
   document.getElementById('qtext').textContent = q;
 });
 
-// Physical keyboard
 document.addEventListener('keydown', function(e) {
   if (!document.getElementById('screen-search').classList.contains('active')) return;
-  if (e.key === 'Backspace') { e.preventDefault(); q = q.slice(0,-1); document.getElementById('qtext').textContent = q; }
-  else if (e.key === 'Enter') { search(); }
-  else if (e.key.length === 1 && !e.ctrlKey && !e.metaKey) { q += e.key; document.getElementById('qtext').textContent = q; }
+  if (e.key === 'Backspace') {
+    e.preventDefault();
+    q = q.slice(0, -1);
+    document.getElementById('qtext').textContent = q;
+  } else if (e.key === 'Enter') {
+    doSearch();
+  } else if (e.key.length === 1 && !e.ctrlKey && !e.metaKey) {
+    q += e.key;
+    document.getElementById('qtext').textContent = q;
+  }
 });
 
-// Search
-async function search() {
+// ── Search ───────────────────────────────────────────────────────────────────
+async function doSearch() {
   if (!q.trim()) return;
   goTo('results');
   document.getElementById('results-title').textContent = '"' + q + '"';
-  document.getElementById('results-list').innerHTML = '<div class="loading">Buscando<span class="dots"></span></div>';
+  document.getElementById('results-list').innerHTML =
+    '<div class="loading">Buscando<span class="dots"></span></div>';
+
   try {
-    var url = 'https://kinok-search.totin202209.workers.dev/?q=' + encodeURIComponent(q) + (selLang ? '&lang=' + selLang : '');
-    var r = await fetch(url);
+    var params = '?q=' + encodeURIComponent(q.trim());
+    if (selLang) params += '&lang=' + selLang;
+    var r = await fetch(WORKER + params);
     var data = await r.json();
+
     if (data.error) { showErr(data.error); return; }
+
     results = data.results || [];
     renderResults();
   } catch(e) {
@@ -304,47 +685,137 @@ async function search() {
 
 function renderResults() {
   var el = document.getElementById('results-list');
+
   if (!results.length) {
     el.innerHTML = '<div class="empty">Sin resultados para "' + esc(q) + '".<br><br>Probá otro título o autor.</div>';
     return;
   }
-  el.innerHTML = results.map(function(r, i) {
+
+  var html = '<div class="results-count">' + results.length + ' resultados</div>';
+  html += results.map(function(r, i) {
     return '<div class="result-item" onclick="openBook(' + i + ')">' +
       '<div class="rt">' + esc(r.title) + '</div>' +
+      (r.author !== '—' ? '<div class="result-author">' + esc(r.author) + '</div>' : '') +
       '<div class="rm">' +
-        (r.format !== '—' ? '<span class="rfmt">' + r.format + '</span>' : '') +
-        esc(r.author) + (r.year !== '—' ? ' · ' + r.year : '') +
-        (r.size !== '—' ? ' · ' + r.size : '') +
-      '</div></div>';
+        (r.format !== '—' ? '<span class="rfmt">' + esc(r.format) + '</span>' : '') +
+        (r.year   !== '—' ? '<span>' + esc(r.year)   + '</span>' : '') +
+        (r.lang   !== '—' ? '<span>' + esc(r.lang)   + '</span>' : '') +
+        (r.size   !== '—' ? '<span>' + esc(r.size)   + '</span>' : '') +
+      '</div>' +
+    '</div>';
   }).join('');
+
+  el.innerHTML = html;
 }
 
 function showErr(msg) {
-  document.getElementById('results-list').innerHTML = '<div class="empty">' + esc(msg) + '</div>';
+  document.getElementById('results-list').innerHTML =
+    '<div class="empty">' + esc(msg) + '</div>';
 }
 
-function openBook(i) {
+// ── Book detail ───────────────────────────────────────────────────────────────
+async function openBook(i) {
   selBook = results[i];
-  document.getElementById('book-info').innerHTML =
-    '<h3>' + esc(selBook.title) + '</h3>' +
-    '<div class="book-author">' + esc(selBook.author) + '</div>' +
-    '<div class="book-tags">' +
-      (selBook.year !== '—' ? '<span class="tag">' + selBook.year + '</span>' : '') +
-      (selBook.lang !== '—' ? '<span class="tag">' + selBook.lang + '</span>' : '') +
-      (selBook.size !== '—' ? '<span class="tag">' + selBook.size + '</span>' : '') +
-      (selBook.format !== '—' ? '<span class="tag">' + selBook.format + '</span>' : '') +
-    '</div>';
   goTo('book');
+
+  // Render basic info immediately from search result
+  renderBookMeta(selBook);
+
+  // Reset downloads
+  document.getElementById('dl-buttons').innerHTML =
+    '<div class="dl-loading">Buscando links<span class="dots"></span></div>';
+
+  // Fetch full detail from worker
+  try {
+    var r = await fetch(WORKER + '/detail?md5=' + selBook.md5);
+    var data = await r.json();
+
+    if (data.detail) {
+      var d = data.detail;
+
+      // Update meta if we got better data
+      if (d.title && d.title !== '—') selBook.title      = d.title;
+      if (d.author && d.author !== '—') selBook.author   = d.author;
+      if (d.year && d.year !== '—') selBook.year         = d.year;
+      if (d.pages && d.pages !== '—') selBook.pages      = d.pages;
+      if (d.isbn && d.isbn !== '—') selBook.isbn         = d.isbn;
+      if (d.publisher && d.publisher !== '—') selBook.publisher = d.publisher;
+      renderBookMeta(selBook);
+
+      // Cover
+      if (d.cover) {
+        var coverEl = document.getElementById('book-cover');
+        var img = document.createElement('img');
+        img.src = d.cover;
+        img.onerror = function(){ coverEl.innerHTML = '📖'; };
+        coverEl.innerHTML = '';
+        coverEl.appendChild(img);
+      }
+
+      // Description
+      if (d.description) {
+        var descEl = document.getElementById('book-description');
+        descEl.textContent = d.description.slice(0, 300) + (d.description.length > 300 ? '…' : '');
+        descEl.style.display = 'block';
+      }
+
+      // Download buttons
+      if (d.downloads && d.downloads.length) {
+        renderDownloads(d.downloads);
+      } else {
+        renderFallbackDownload();
+      }
+    } else {
+      renderFallbackDownload();
+    }
+  } catch(e) {
+    renderFallbackDownload();
+  }
 }
 
-function dl(ext) {
-  if (!selBook) return;
-  var base = 'https://annas-archive.gl';
-  try { base = new URL(selBook.url).origin; } catch(e){}
-  var url = selBook.path && selBook.path.startsWith('/md5/')
-    ? base + selBook.path
-    : base + '/search?q=' + encodeURIComponent(selBook.title) + '&ext=' + ext + (selLang ? '&lang=' + selLang : '');
-  window.open(url, '_blank');
+function renderBookMeta(b) {
+  document.getElementById('book-meta').innerHTML =
+    '<div class="book-title">' + esc(b.title) + '</div>' +
+    (b.author !== '—' ? '<div class="book-author-line">' + esc(b.author) + '</div>' : '') +
+    '<div class="book-tags">' +
+      (b.format !== '—'    ? '<span class="btag">' + esc(b.format)    + '</span>' : '') +
+      (b.year   !== '—'    ? '<span class="btag">' + esc(b.year)      + '</span>' : '') +
+      (b.lang   !== '—'    ? '<span class="btag">' + esc(b.lang)      + '</span>' : '') +
+      (b.size   !== '—'    ? '<span class="btag">' + esc(b.size)      + '</span>' : '') +
+      (b.pages  && b.pages !== '—' ? '<span class="btag">' + esc(b.pages) + ' pp</span>' : '') +
+      (b.isbn   && b.isbn  !== '—' ? '<span class="btag">ISBN ' + esc(b.isbn) + '</span>' : '') +
+    '</div>';
+}
+
+function renderDownloads(downloads) {
+  var labels = {
+    'IPFS':          'Red distribuida — rápido',
+    'Tor':           'Red Tor — anónimo',
+    'Slow download': 'Descarga lenta — sin cuenta',
+    'Direct':        'Descarga directa',
+  };
+  document.getElementById('dl-buttons').innerHTML = downloads.map(function(dl) {
+    var sub = labels[dl.label] || dl.url.replace('https://', '').slice(0, 40);
+    return '<a class="dl-btn" href="' + esc(dl.url) + '" target="_blank" rel="noopener">' +
+      '<span class="dl-arrow">↓</span>' +
+      '<span class="dl-info">' +
+        '<span class="dl-label-text">' + esc(dl.label) + '</span>' +
+        '<span class="dl-sub">' + esc(sub) + '</span>' +
+      '</span>' +
+    '</a>';
+  }).join('');
+}
+
+function renderFallbackDownload() {
+  // No detail links found — send directly to Anna's page
+  document.getElementById('dl-buttons').innerHTML =
+    '<a class="dl-btn" href="' + esc(selBook.url) + '" target="_blank" rel="noopener">' +
+      '<span class="dl-arrow">↓</span>' +
+      '<span class="dl-info">' +
+        '<span class="dl-label-text">Ver opciones de descarga</span>' +
+        '<span class="dl-sub">anna\'s archive · página del libro</span>' +
+      '</span>' +
+    '</a>';
 }
 
 function openAnna() {
@@ -352,7 +823,7 @@ function openAnna() {
 }
 
 function esc(s) {
-  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 </script>
 </body>
