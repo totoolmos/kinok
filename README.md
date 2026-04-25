@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Kinok — Kindle Ebook Browser
 
 **All the Books. Always With You.**
@@ -83,3 +84,6 @@ npm run dev
 - `annas-archive.li`
 
 Si uno falla, prueba el siguiente automáticamente.
+=======
+# kinok
+>>>>>>> dcd492b2802e7545fc2968db4d16e13156af1141
