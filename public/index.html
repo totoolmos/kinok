@@ -76,73 +76,76 @@ html, body {
 /* ══════════════════════════════════════
    BÚSQUEDA
 ══════════════════════════════════════ */
-#screen-search { background:#b8b8b8; }
+#screen-search { background:#e8e8e8; }
+#screen-search .page-header { background:#e8e8e8; }
 
-/* Barra de búsqueda */
 #search-bar {
   display:flex; align-items:center; gap:10px;
   margin:10px 10px 8px;
-  background:#fff; border:2.5px solid #000;
-  padding:0 14px; min-height:60px;
-  flex-shrink:0;
+  background:#fff; border:2px solid #000;
+  padding:0 14px; min-height:62px; flex-shrink:0;
 }
-#search-bar .s-icon { font-size:20px; color:#999; flex-shrink:0; }
+#search-bar .s-icon { font-size:20px; color:#bbb; flex-shrink:0; }
 #qtext  { font-size:22px; font-family:'Georgia',serif; flex:1; word-break:break-all; }
 #cursor { font-size:22px; opacity:0.3; flex-shrink:0; }
 
 /* ── Teclado ── */
 .keyboard {
-  flex:1;
-  background:#b8b8b8;
-  padding:6px 8px 14px;
-  display:flex; flex-direction:column; gap:9px;
+  flex:none; display:flex; flex-direction:column;
+  gap:9px; padding:10px 8px 16px;
+  background:#e8e8e8;
 }
 
-/* Fila de teclas */
 .kb-row {
-  display:flex; justify-content:center; align-items:stretch; gap:5px;
+  display:flex; gap:6px; height:64px;
 }
 
-/* Tecla base — sans-serif para legibilidad de caracteres sueltos */
+/* Tecla base — alto automático (fill flex), sans-serif */
 .key {
-  flex:1; max-width:54px;
-  height:54px;
-  background:#fff;
-  border:none; border-radius:6px;
-  box-shadow:0 3px 0 #7a7a7a;
+  flex:1; max-width:56px;
+  background:#fff; border:2px solid #111; border-radius:4px;
   font-family:Helvetica,Arial,sans-serif;
-  font-size:18px; font-weight:600; color:#000;
+  font-size:19px; font-weight:700; color:#000;
   display:flex; align-items:center; justify-content:center;
   user-select:none; -webkit-user-select:none;
-  cursor:pointer;
 }
-.key:active { background:#555; color:#fff; box-shadow:0 1px 0 #333; }
+.key:active { background:#000; color:#fff; }
 
-/* Tecla utilitaria (borrar, cambio de modo) */
-.key-util {
-  max-width:none; flex:1.6;
-  background:#909090; color:#000;
-  box-shadow:0 3px 0 #555;
-  font-size:15px;
+/* Fila 2 — sin max-width para que llene el ancho */
+.key-w { max-width:none; }
+
+/* Borrar / utilidad */
+.key-del {
+  flex:1.8; max-width:none;
+  background:#c4c4c4; border-color:#555; font-size:15px;
 }
-.key-util:active { background:#444; color:#fff; }
+.key-del:active { background:#000; color:#fff; border-color:#000; }
+
+/* Cambio de modo */
+.key-mode {
+  flex:none; width:66px;
+  background:#c4c4c4; border-color:#555;
+  font-family:Helvetica,Arial,sans-serif;
+  font-size:12px; font-weight:700; letter-spacing:.5px;
+}
+.key-mode:active { background:#000; color:#fff; border-color:#000; }
 
 /* Barra espaciadora */
 .key-space {
-  max-width:none; flex:5;
-  font-size:13px; letter-spacing:1px; color:#555;
+  flex:1; max-width:none;
+  font-family:Helvetica,Arial,sans-serif;
+  font-size:12px; color:#777; letter-spacing:1px;
 }
-.key-space:active { background:#444; color:#fff; }
+.key-space:active { background:#000; color:#fff; }
 
-/* Botón BUSCAR — acción primaria */
+/* BUSCAR */
 .key-go {
-  max-width:none; flex:2;
-  background:#000; color:#fff;
-  font-size:13px; font-weight:700; letter-spacing:1.5px;
-  box-shadow:0 3px 0 #000;
-  border-radius:6px;
+  flex:none; width:100px;
+  background:#000; color:#fff; border-color:#000;
+  font-family:Helvetica,Arial,sans-serif;
+  font-size:12px; font-weight:800; letter-spacing:2px;
 }
-.key-go:active { background:#444; box-shadow:0 1px 0 #000; }
+.key-go:active { background:#444; }
 
 /* ══════════════════════════════════════
    RESULTADOS
@@ -241,7 +244,7 @@ html, body {
 
 <!-- ══ BÚSQUEDA ══════════════════════════════════════════ -->
 <div id="screen-search" class="screen">
-  <div class="page-header" style="background:#b8b8b8;">
+  <div class="page-header">
     <span class="back" onclick="goTo('home')">◀</span>
     <h2>Buscar libro</h2>
   </div>
@@ -258,14 +261,14 @@ html, body {
       <div class="key" data-c="q">Q</div><div class="key" data-c="w">W</div><div class="key" data-c="e">E</div><div class="key" data-c="r">R</div><div class="key" data-c="t">T</div><div class="key" data-c="y">Y</div><div class="key" data-c="u">U</div><div class="key" data-c="i">I</div><div class="key" data-c="o">O</div><div class="key" data-c="p">P</div>
     </div>
     <div class="kb-row" id="ka2">
-      <div class="key" data-c="a">A</div><div class="key" data-c="s">S</div><div class="key" data-c="d">D</div><div class="key" data-c="f">F</div><div class="key" data-c="g">G</div><div class="key" data-c="h">H</div><div class="key" data-c="j">J</div><div class="key" data-c="k">K</div><div class="key" data-c="l">L</div>
+      <div class="key key-w" data-c="a">A</div><div class="key key-w" data-c="s">S</div><div class="key key-w" data-c="d">D</div><div class="key key-w" data-c="f">F</div><div class="key key-w" data-c="g">G</div><div class="key key-w" data-c="h">H</div><div class="key key-w" data-c="j">J</div><div class="key key-w" data-c="k">K</div><div class="key key-w" data-c="l">L</div>
     </div>
     <div class="kb-row" id="ka3">
-      <div class="key" data-c="z">Z</div><div class="key" data-c="x">X</div><div class="key" data-c="c">C</div><div class="key" data-c="v">V</div><div class="key" data-c="b">B</div><div class="key" data-c="n">N</div><div class="key" data-c="m">M</div>
-      <div class="key key-util" data-c="BACK">⌫</div>
+      <div class="key key-w" data-c="z">Z</div><div class="key key-w" data-c="x">X</div><div class="key key-w" data-c="c">C</div><div class="key key-w" data-c="v">V</div><div class="key key-w" data-c="b">B</div><div class="key key-w" data-c="n">N</div><div class="key key-w" data-c="m">M</div>
+      <div class="key key-del" data-c="BACK">⌫</div>
     </div>
     <div class="kb-row" id="ka4">
-      <div class="key key-util" data-c="MODE_NUM" style="font-size:13px;letter-spacing:.5px;">123</div>
+      <div class="key key-mode" data-c="MODE_NUM">123</div>
       <div class="key key-space" data-c="SPACE">espacio</div>
       <div class="key key-go" data-c="SEARCH">BUSCAR</div>
     </div>
@@ -278,11 +281,11 @@ html, body {
       <div class="key" data-c="á">Á</div><div class="key" data-c="é">É</div><div class="key" data-c="í">Í</div><div class="key" data-c="ó">Ó</div><div class="key" data-c="ú">Ú</div><div class="key" data-c="ñ">Ñ</div><div class="key" data-c="ü">Ü</div><div class="key" data-c="ç">Ç</div><div class="key" data-c="HYPH">-</div><div class="key" data-c="APOS">'</div>
     </div>
     <div class="kb-row" id="kn3" style="display:none">
-      <div class="key" data-c="DOT">.</div><div class="key" data-c="COMMA">,</div><div class="key" data-c="@">@</div><div class="key" data-c="&amp;">&amp;</div><div class="key" data-c="(">(</div><div class="key" data-c=")">)</div><div class="key" data-c="!">!</div><div class="key" data-c="?">?</div>
-      <div class="key key-util" data-c="BACK">⌫</div>
+      <div class="key key-w" data-c="DOT">.</div><div class="key key-w" data-c="COMMA">,</div><div class="key key-w" data-c="@">@</div><div class="key key-w" data-c="&amp;">&amp;</div><div class="key key-w" data-c="(">(</div><div class="key key-w" data-c=")">)</div><div class="key key-w" data-c="!">!</div><div class="key key-w" data-c="?">?</div>
+      <div class="key key-del" data-c="BACK">⌫</div>
     </div>
     <div class="kb-row" id="kn4" style="display:none">
-      <div class="key key-util" data-c="MODE_ABC" style="font-size:13px;letter-spacing:.5px;">ABC</div>
+      <div class="key key-mode" data-c="MODE_ABC">ABC</div>
       <div class="key key-space" data-c="SPACE">espacio</div>
       <div class="key key-go" data-c="SEARCH">BUSCAR</div>
     </div>
