@@ -514,13 +514,10 @@ function dl() {
 
   goTo('downloading');
 
-  var old = document.getElementById('_dlf');
-  if (old) old.parentNode.removeChild(old);
-  var f = document.createElement('iframe');
-  f.id = '_dlf';
-  f.style.cssText = 'position:fixed;top:-2px;left:-2px;width:1px;height:1px;opacity:0;border:none;';
-  f.src = '/api/download?' + params;
-  document.body.appendChild(f);
+  // Usar window.location.href en lugar de iframe:
+  // - En Kindle browser: navega a la URL y el epub se abre en el lector nativo
+  // - En browsers de escritorio: inicia la descarga sin cambiar la página visible
+  setTimeout(function() { window.location.href = '/api/download?' + params; }, 80);
 }
 
 function openAnna() {
