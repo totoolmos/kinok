@@ -60,10 +60,21 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  const filePath = path.join(__dirname, 'public', 'index.html');
+  const MIME = { '.html':'text/html;charset=utf-8', '.png':'image/png', '.jpg':'image/jpeg', '.jpeg':'image/jpeg', '.svg':'image/svg+xml', '.ico':'image/x-icon', '.css':'text/css', '.js':'text/javascript' };
+  const safe = url.pathname.replace(/\.\./g, '').replace(/^\//, '') || 'index.html';
+  const filePath = path.join(__dirname, 'public', safe);
   fs.readFile(filePath, (err, data) => {
-    if (err) { res.writeHead(404); res.end('Not found'); return; }
-    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+    if (err) {
+      const idx = path.join(__dirname, 'public', 'index.html');
+      fs.readFile(idx, (e2, d2) => {
+        if (e2) { res.writeHead(404); res.end('Not found'); return; }
+        res.writeHead(200, { 'Content-Type': 'text/html;charset=utf-8' });
+        res.end(d2);
+      });
+      return;
+    }
+    const ext = path.extname(filePath).toLowerCase();
+    res.writeHead(200, { 'Content-Type': MIME[ext] || 'application/octet-stream' });
     res.end(data);
   });
 });

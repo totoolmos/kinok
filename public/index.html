@@ -212,7 +212,10 @@ html, body {
   <div class="home-top">
     <div class="home-rule-t"></div>
     <div class="home-rule-t2"></div>
-    <div class="home-kinok">KINOK</div>
+    <img src="/logo.png" alt="Kinok" id="home-logo"
+         style="max-width:220px;display:block;margin:0 auto 16px;filter:grayscale(100%);"
+         onerror="this.style.display='none';document.getElementById('home-kinok-txt').style.display='block'">
+    <div class="home-kinok" id="home-kinok-txt" style="display:none">KINOK</div>
     <div class="home-tagline">Encuentra cualquier libro<br>para tu Kindle</div>
     <div class="home-rule-b"></div>
     <div class="home-rule-b2"></div>
