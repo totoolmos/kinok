@@ -6,52 +6,45 @@
 <title>Kinok</title>
 <style>
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; touch-action:manipulation; }
+
+/* Tipografía base — Georgia es segura en todos los Kindle */
 html, body {
   background:#fff; color:#000;
   font-family:'Georgia','Times New Roman',serif;
+  font-size:16px; line-height:1.5;
   width:100%; max-width:600px; margin:0 auto;
 }
 .screen { display:none; flex-direction:column; min-height:100vh; }
 .screen.active { display:flex; }
 
 /* ══════════════════════════════════════
-   HOME  —  diseño tipo portada de libro
+   HOME
 ══════════════════════════════════════ */
 #screen-home { padding:0; justify-content:space-between; }
 
-.home-top { padding:64px 32px 0; text-align:center; }
-
-.home-border-thick { height:5px; background:#000; margin-bottom:5px; }
-.home-border-thin  { height:1px; background:#000; margin-bottom:32px; }
-
+.home-top { padding:60px 32px 0; text-align:center; }
+.home-rule-t { height:5px; background:#000; margin-bottom:4px; }
+.home-rule-t2 { height:1px; background:#000; margin-bottom:34px; }
 .home-kinok {
   font-size:52px; font-weight:bold;
   letter-spacing:8px; text-indent:8px;
   margin-bottom:16px; line-height:1;
 }
-.home-tagline {
-  font-size:13px; font-style:italic; color:#777;
-  line-height:1.7; margin-bottom:32px;
-}
-.home-border-thin2  { height:1px; background:#000; margin-bottom:5px; }
-.home-border-thick2 { height:5px; background:#000; }
+.home-tagline { font-size:13px; font-style:italic; color:#777; line-height:1.7; margin-bottom:34px; }
+.home-rule-b  { height:1px; background:#000; margin-bottom:4px; }
+.home-rule-b2 { height:5px; background:#000; }
 
-.home-mid { padding:36px 20px; flex:1; display:flex; flex-direction:column; justify-content:center; gap:0; }
-
+.home-mid { padding:34px 20px; flex:1; display:flex; flex-direction:column; justify-content:center; }
 .main-btn {
-  display:block; width:100%;
-  padding:36px 20px;
+  display:block; width:100%; padding:36px 20px;
   background:#000; color:#fff; border:none;
   font-family:'Georgia',serif; font-size:24px;
   font-weight:bold; letter-spacing:4px; text-align:center;
 }
 .main-btn:active { background:#333; }
 
-.home-lang-wrap { margin-top:28px; }
-.section-label {
-  font-size:10px; letter-spacing:3px; text-transform:uppercase;
-  color:#aaa; margin-bottom:11px;
-}
+.home-lang-wrap { margin-top:26px; }
+.section-label { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:#aaa; margin-bottom:11px; }
 .lang-row { display:flex; width:100%; border:2px solid #000; }
 .lang-chip {
   flex:1; padding:14px 0; text-align:center;
@@ -70,74 +63,89 @@ html, body {
 }
 
 /* ══════════════════════════════════════
-   PAGE HEADER
+   HEADER COMÚN
 ══════════════════════════════════════ */
 .page-header {
-  padding:18px 20px 15px; border-bottom:3px solid #000;
+  padding:17px 20px 14px; border-bottom:3px solid #000;
   display:flex; align-items:center; gap:8px; flex-shrink:0;
 }
 .page-header h2 { font-size:20px; font-weight:bold; letter-spacing:1px; flex:1; }
-.back { font-size:26px; padding:6px 12px 6px 0; font-weight:bold; user-select:none; line-height:1; }
+.back { font-size:26px; padding:6px 12px 6px 0; font-weight:bold; line-height:1; user-select:none; }
 .back:active { opacity:0.3; }
 
 /* ══════════════════════════════════════
-   SEARCH
+   BÚSQUEDA
 ══════════════════════════════════════ */
-#screen-search { padding:0; background:#fff; }
+#screen-search { background:#b8b8b8; }
 
-#search-display {
-  margin:12px 10px 8px;
-  border:2.5px solid #000; background:#fff;
-  padding:0 16px; min-height:62px;
-  display:flex; align-items:center; gap:10px; flex-shrink:0;
+/* Barra de búsqueda */
+#search-bar {
+  display:flex; align-items:center; gap:10px;
+  margin:10px 10px 8px;
+  background:#fff; border:2.5px solid #000;
+  padding:0 14px; min-height:60px;
+  flex-shrink:0;
 }
-.search-icon { font-size:22px; color:#bbb; flex-shrink:0; }
+#search-bar .s-icon { font-size:20px; color:#999; flex-shrink:0; }
 #qtext  { font-size:22px; font-family:'Georgia',serif; flex:1; word-break:break-all; }
-#cursor { font-size:22px; opacity:0.35; font-weight:300; flex-shrink:0; }
+#cursor { font-size:22px; opacity:0.3; flex-shrink:0; }
 
-/* Teclado con fondo gris, teclas blancas estilo móvil */
+/* ── Teclado ── */
 .keyboard {
-  background:#ccc;
-  padding:8px 6px 14px;
-  flex:1; display:flex; flex-direction:column; gap:8px;
+  flex:1;
+  background:#b8b8b8;
+  padding:6px 8px 14px;
+  display:flex; flex-direction:column; gap:9px;
 }
-.kb-row { display:flex; justify-content:center; gap:6px; }
 
-/* Tecla base */
+/* Fila de teclas */
+.kb-row {
+  display:flex; justify-content:center; align-items:stretch; gap:5px;
+}
+
+/* Tecla base — sans-serif para legibilidad de caracteres sueltos */
 .key {
-  flex:1; max-width:52px; height:50px;
-  background:#fff; border:none; border-radius:5px;
-  box-shadow:0 2px 0 #888;
-  font-size:17px; font-family:'Georgia',serif; font-weight:bold;
+  flex:1; max-width:54px;
+  height:54px;
+  background:#fff;
+  border:none; border-radius:6px;
+  box-shadow:0 3px 0 #7a7a7a;
+  font-family:Helvetica,Arial,sans-serif;
+  font-size:18px; font-weight:600; color:#000;
   display:flex; align-items:center; justify-content:center;
   user-select:none; -webkit-user-select:none;
+  cursor:pointer;
 }
-.key:active { background:#444; color:#fff; box-shadow:0 1px 0 #222; }
+.key:active { background:#555; color:#fff; box-shadow:0 1px 0 #333; }
 
-/* Variantes */
-.key.k-del  { max-width:none; flex:1.8; font-size:14px; background:#aaa; box-shadow:0 2px 0 #666; }
-.key.k-del:active { background:#000; }
-
-.key.k-mode { max-width:none; flex:1.5; font-size:12px; font-weight:bold; background:#aaa; box-shadow:0 2px 0 #666; letter-spacing:0.5px; }
-.key.k-mode:active { background:#000; color:#fff; }
-
-.key.k-space { max-width:none; flex:4.5; font-size:12px; letter-spacing:1px; box-shadow:0 2px 0 #888; }
-.key.k-space:active { background:#444; color:#fff; }
-
-.key.k-go {
-  max-width:none; flex:2; font-size:12px; font-weight:bold;
-  background:#000; color:#fff; letter-spacing:1px;
-  box-shadow:0 2px 0 #000;
+/* Tecla utilitaria (borrar, cambio de modo) */
+.key-util {
+  max-width:none; flex:1.6;
+  background:#909090; color:#000;
+  box-shadow:0 3px 0 #555;
+  font-size:15px;
 }
-.key.k-go:active { background:#444; }
+.key-util:active { background:#444; color:#fff; }
 
-/* Filas de modo — solo la activa visible */
-.kb-alpha, .kb-num { display:contents; }
-.keyboard[data-mode="num"]   .kb-alpha .kb-row { display:none; }
-.keyboard[data-mode="alpha"] .kb-num   .kb-row { display:none; }
+/* Barra espaciadora */
+.key-space {
+  max-width:none; flex:5;
+  font-size:13px; letter-spacing:1px; color:#555;
+}
+.key-space:active { background:#444; color:#fff; }
+
+/* Botón BUSCAR — acción primaria */
+.key-go {
+  max-width:none; flex:2;
+  background:#000; color:#fff;
+  font-size:13px; font-weight:700; letter-spacing:1.5px;
+  box-shadow:0 3px 0 #000;
+  border-radius:6px;
+}
+.key-go:active { background:#444; box-shadow:0 1px 0 #000; }
 
 /* ══════════════════════════════════════
-   RESULTS
+   RESULTADOS
 ══════════════════════════════════════ */
 #screen-results { padding:0; }
 #results-list { flex:1; }
@@ -156,7 +164,7 @@ html, body {
 .empty   { padding:48px 24px; text-align:center; font-size:16px; color:#888; font-style:italic; line-height:2.4; }
 
 /* ══════════════════════════════════════
-   BOOK
+   LIBRO
 ══════════════════════════════════════ */
 #screen-book { padding:0; }
 .book-cover-section { display:flex; justify-content:center; padding:28px 20px 24px; background:#f6f6f6; border-bottom:1.5px solid #ddd; }
@@ -174,7 +182,7 @@ html, body {
 .tag { border:1.5px solid #bbb; padding:5px 11px; font-size:12px; color:#555; }
 
 /* ══════════════════════════════════════
-   BUTTONS
+   BOTONES
 ══════════════════════════════════════ */
 .btn-primary { display:block; margin:24px 20px; padding:30px 20px; background:#000; color:#fff; border:3px solid #000; font-family:'Georgia',serif; font-size:22px; font-weight:bold; letter-spacing:3px; text-align:center; text-decoration:none; }
 .btn-primary:active { background:#333; }
@@ -184,20 +192,15 @@ html, body {
 .btn-ghost:active { background:#f0f0f0; }
 
 /* ══════════════════════════════════════
-   DOWNLOADING
+   DESCARGA
 ══════════════════════════════════════ */
 #screen-downloading { padding:0; }
-.dl-book-panel {
-  flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
-  padding:48px 32px; text-align:center;
-  border-bottom:1.5px solid #ddd;
-}
+.dl-book-panel { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:48px 32px; text-align:center; border-bottom:1.5px solid #ddd; }
 .dl-label { font-size:10px; letter-spacing:4px; text-transform:uppercase; color:#aaa; margin-bottom:20px; }
 .dl-cover-mini { width:72px; height:100px; background:#e8e8e8; border:1px solid #ccc; display:flex; align-items:center; justify-content:center; font-size:28px; margin:0 auto 22px; box-shadow:3px 3px 0 #ccc; }
 .dl-cover-mini img { width:100%; height:100%; object-fit:cover; }
 .dl-title-big   { font-size:22px; font-weight:bold; line-height:1.4; margin-bottom:8px; }
 .dl-author-line { font-size:15px; color:#666; font-style:italic; }
-
 .dl-footer { padding:20px 20px 24px; }
 .dl-fallback-label { font-size:11px; color:#bbb; letter-spacing:2px; text-transform:uppercase; text-align:center; margin-bottom:14px; }
 </style>
@@ -207,16 +210,13 @@ html, body {
 <!-- ══ HOME ══════════════════════════════════════════════ -->
 <div id="screen-home" class="screen active">
   <div class="home-top">
-    <div class="home-border-thick"></div>
-    <div class="home-border-thin"></div>
+    <div class="home-rule-t"></div>
+    <div class="home-rule-t2"></div>
     <div class="home-kinok">KINOK</div>
-    <div class="home-tagline">
-      Encuentra cualquier libro<br>para tu Kindle
-    </div>
-    <div class="home-border-thin2"></div>
-    <div class="home-border-thick2"></div>
+    <div class="home-tagline">Encuentra cualquier libro<br>para tu Kindle</div>
+    <div class="home-rule-b"></div>
+    <div class="home-rule-b2"></div>
   </div>
-
   <div class="home-mid">
     <div class="main-btn" onclick="goTo('search')">⌕ &nbsp;BUSCAR LIBRO</div>
     <div class="home-lang-wrap">
@@ -231,116 +231,63 @@ html, body {
       </div>
     </div>
   </div>
-
   <div class="home-bottom">
-    <span>Kinok</span>
-    <span>v 1.0</span>
+    <span>Kinok</span><span>v 1.0</span>
   </div>
 </div>
 
-<!-- ══ SEARCH ════════════════════════════════════════════ -->
+<!-- ══ BÚSQUEDA ══════════════════════════════════════════ -->
 <div id="screen-search" class="screen">
-  <div class="page-header">
+  <div class="page-header" style="background:#b8b8b8;">
     <span class="back" onclick="goTo('home')">◀</span>
     <h2>Buscar libro</h2>
   </div>
-  <div id="search-display">
-    <span class="search-icon">⌕</span>
+
+  <div id="search-bar">
+    <span class="s-icon">⌕</span>
     <span id="qtext"></span><span id="cursor">|</span>
   </div>
 
-  <div class="keyboard" id="keyboard" data-mode="alpha">
+  <div class="keyboard" id="keyboard">
 
-    <!-- MODO LETRAS -->
-    <div class="kb-alpha">
-      <div class="kb-row">
-        <div class="key" data-c="q">Q</div>
-        <div class="key" data-c="w">W</div>
-        <div class="key" data-c="e">E</div>
-        <div class="key" data-c="r">R</div>
-        <div class="key" data-c="t">T</div>
-        <div class="key" data-c="y">Y</div>
-        <div class="key" data-c="u">U</div>
-        <div class="key" data-c="i">I</div>
-        <div class="key" data-c="o">O</div>
-        <div class="key" data-c="p">P</div>
-      </div>
-      <div class="kb-row">
-        <div class="key" data-c="a">A</div>
-        <div class="key" data-c="s">S</div>
-        <div class="key" data-c="d">D</div>
-        <div class="key" data-c="f">F</div>
-        <div class="key" data-c="g">G</div>
-        <div class="key" data-c="h">H</div>
-        <div class="key" data-c="j">J</div>
-        <div class="key" data-c="k">K</div>
-        <div class="key" data-c="l">L</div>
-      </div>
-      <div class="kb-row">
-        <div class="key" data-c="z">Z</div>
-        <div class="key" data-c="x">X</div>
-        <div class="key" data-c="c">C</div>
-        <div class="key" data-c="v">V</div>
-        <div class="key" data-c="b">B</div>
-        <div class="key" data-c="n">N</div>
-        <div class="key" data-c="m">M</div>
-        <div class="key k-del" data-c="BACK">⌫</div>
-      </div>
-      <div class="kb-row">
-        <div class="key k-mode" data-c="MODE_NUM">123</div>
-        <div class="key k-space" data-c="SPACE">ESPACIO</div>
-        <div class="key k-go"   data-c="SEARCH">BUSCAR</div>
-      </div>
+    <!-- ── MODO LETRAS (visible por defecto) ── -->
+    <div class="kb-row" id="ka1">
+      <div class="key" data-c="q">Q</div><div class="key" data-c="w">W</div><div class="key" data-c="e">E</div><div class="key" data-c="r">R</div><div class="key" data-c="t">T</div><div class="key" data-c="y">Y</div><div class="key" data-c="u">U</div><div class="key" data-c="i">I</div><div class="key" data-c="o">O</div><div class="key" data-c="p">P</div>
+    </div>
+    <div class="kb-row" id="ka2">
+      <div class="key" data-c="a">A</div><div class="key" data-c="s">S</div><div class="key" data-c="d">D</div><div class="key" data-c="f">F</div><div class="key" data-c="g">G</div><div class="key" data-c="h">H</div><div class="key" data-c="j">J</div><div class="key" data-c="k">K</div><div class="key" data-c="l">L</div>
+    </div>
+    <div class="kb-row" id="ka3">
+      <div class="key" data-c="z">Z</div><div class="key" data-c="x">X</div><div class="key" data-c="c">C</div><div class="key" data-c="v">V</div><div class="key" data-c="b">B</div><div class="key" data-c="n">N</div><div class="key" data-c="m">M</div>
+      <div class="key key-util" data-c="BACK">⌫</div>
+    </div>
+    <div class="kb-row" id="ka4">
+      <div class="key key-util" data-c="MODE_NUM" style="font-size:13px;letter-spacing:.5px;">123</div>
+      <div class="key key-space" data-c="SPACE">espacio</div>
+      <div class="key key-go" data-c="SEARCH">BUSCAR</div>
     </div>
 
-    <!-- MODO NÚMEROS + ACENTOS -->
-    <div class="kb-num">
-      <div class="kb-row">
-        <div class="key" data-c="1">1</div>
-        <div class="key" data-c="2">2</div>
-        <div class="key" data-c="3">3</div>
-        <div class="key" data-c="4">4</div>
-        <div class="key" data-c="5">5</div>
-        <div class="key" data-c="6">6</div>
-        <div class="key" data-c="7">7</div>
-        <div class="key" data-c="8">8</div>
-        <div class="key" data-c="9">9</div>
-        <div class="key" data-c="0">0</div>
-      </div>
-      <div class="kb-row">
-        <div class="key" data-c="á">Á</div>
-        <div class="key" data-c="é">É</div>
-        <div class="key" data-c="í">Í</div>
-        <div class="key" data-c="ó">Ó</div>
-        <div class="key" data-c="ú">Ú</div>
-        <div class="key" data-c="ñ">Ñ</div>
-        <div class="key" data-c="ü">Ü</div>
-        <div class="key" data-c="ç">Ç</div>
-        <div class="key" data-c="HYPH">-</div>
-        <div class="key" data-c="APOS">'</div>
-      </div>
-      <div class="kb-row">
-        <div class="key" data-c="DOT">.</div>
-        <div class="key" data-c="COMMA">,</div>
-        <div class="key" data-c="@">@</div>
-        <div class="key" data-c="&amp;">&#38;</div>
-        <div class="key" data-c="(">&#40;</div>
-        <div class="key" data-c=")">&#41;</div>
-        <div class="key" data-c="!">!</div>
-        <div class="key" data-c="?">?</div>
-        <div class="key k-del" data-c="BACK">⌫</div>
-      </div>
-      <div class="kb-row">
-        <div class="key k-mode" data-c="MODE_ABC">ABC</div>
-        <div class="key k-space" data-c="SPACE">ESPACIO</div>
-        <div class="key k-go"   data-c="SEARCH">BUSCAR</div>
-      </div>
+    <!-- ── MODO NÚMEROS + ACENTOS (oculto) ── -->
+    <div class="kb-row" id="kn1" style="display:none">
+      <div class="key" data-c="1">1</div><div class="key" data-c="2">2</div><div class="key" data-c="3">3</div><div class="key" data-c="4">4</div><div class="key" data-c="5">5</div><div class="key" data-c="6">6</div><div class="key" data-c="7">7</div><div class="key" data-c="8">8</div><div class="key" data-c="9">9</div><div class="key" data-c="0">0</div>
+    </div>
+    <div class="kb-row" id="kn2" style="display:none">
+      <div class="key" data-c="á">Á</div><div class="key" data-c="é">É</div><div class="key" data-c="í">Í</div><div class="key" data-c="ó">Ó</div><div class="key" data-c="ú">Ú</div><div class="key" data-c="ñ">Ñ</div><div class="key" data-c="ü">Ü</div><div class="key" data-c="ç">Ç</div><div class="key" data-c="HYPH">-</div><div class="key" data-c="APOS">'</div>
+    </div>
+    <div class="kb-row" id="kn3" style="display:none">
+      <div class="key" data-c="DOT">.</div><div class="key" data-c="COMMA">,</div><div class="key" data-c="@">@</div><div class="key" data-c="&amp;">&amp;</div><div class="key" data-c="(">(</div><div class="key" data-c=")">)</div><div class="key" data-c="!">!</div><div class="key" data-c="?">?</div>
+      <div class="key key-util" data-c="BACK">⌫</div>
+    </div>
+    <div class="kb-row" id="kn4" style="display:none">
+      <div class="key key-util" data-c="MODE_ABC" style="font-size:13px;letter-spacing:.5px;">ABC</div>
+      <div class="key key-space" data-c="SPACE">espacio</div>
+      <div class="key key-go" data-c="SEARCH">BUSCAR</div>
     </div>
 
   </div>
 </div>
 
-<!-- ══ RESULTS ═══════════════════════════════════════════ -->
+<!-- ══ RESULTADOS ════════════════════════════════════════ -->
 <div id="screen-results" class="screen">
   <div class="page-header">
     <span class="back" onclick="goTo('search')">◀</span>
@@ -350,7 +297,7 @@ html, body {
   <div id="results-list"></div>
 </div>
 
-<!-- ══ BOOK ══════════════════════════════════════════════ -->
+<!-- ══ LIBRO ═════════════════════════════════════════════ -->
 <div id="screen-book" class="screen">
   <div class="page-header">
     <span class="back" onclick="goTo('results')">◀</span>
@@ -376,7 +323,7 @@ html, body {
   <a   class="btn-secondary" onclick="openAnna();return false;" href="#">🔗 Anna's Archive</a>
 </div>
 
-<!-- ══ DOWNLOADING ═══════════════════════════════════════ -->
+<!-- ══ DESCARGANDO ═══════════════════════════════════════ -->
 <div id="screen-downloading" class="screen">
   <div class="page-header">
     <span class="back" onclick="goTo('book')">◀</span>
@@ -384,10 +331,9 @@ html, body {
   </div>
   <div class="dl-book-panel">
     <div class="dl-label">Buscando archivo · · ·</div>
-    <div class="dl-cover-mini" id="dl-cover-mini">
+    <div class="dl-cover-mini">
       <img id="dl-cover-img" src="" alt="" style="display:none"
-           onload="this.style.display='block'"
-           onerror="this.style.display='none'">
+           onload="this.style.display='block'" onerror="this.style.display='none'">
       <span id="dl-cover-emoji">📖</span>
     </div>
     <div class="dl-title-big"   id="dl-book-title"></div>
@@ -403,6 +349,16 @@ html, body {
 <script>
 var q = '', selLang = '', selBook = null, results = [];
 
+// Filas de cada modo del teclado
+var KA = ['ka1','ka2','ka3','ka4'];
+var KN = ['kn1','kn2','kn3','kn4'];
+
+function setKbMode(mode) {
+  var isA = (mode === 'alpha');
+  KA.forEach(function(id){ document.getElementById(id).style.display = isA ? 'flex' : 'none'; });
+  KN.forEach(function(id){ document.getElementById(id).style.display = isA ? 'none' : 'flex'; });
+}
+
 // ── Idioma ─────────────────────────────────────────────────────────────────
 document.querySelector('.lang-row').addEventListener('click', function(e) {
   var c = e.target.closest('.lang-chip');
@@ -417,7 +373,7 @@ function goTo(id) {
   document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
   document.getElementById('screen-' + id).classList.add('active');
   window.scrollTo(0, 0);
-  if (id === 'search') document.getElementById('keyboard').dataset.mode = 'alpha';
+  if (id === 'search') setKbMode('alpha');
 }
 
 // ── Teclado ────────────────────────────────────────────────────────────────
@@ -425,24 +381,26 @@ document.getElementById('keyboard').addEventListener('click', function(e) {
   var k = e.target.closest('.key');
   if (!k) return;
   var c = k.dataset.c;
-  if      (c === 'BACK')     q = q.slice(0, -1);
-  else if (c === 'SPACE')    q += ' ';
-  else if (c === 'APOS')     q += "'";
-  else if (c === 'HYPH')     q += '-';
-  else if (c === 'DOT')      q += '.';
-  else if (c === 'COMMA')    q += ',';
+  if      (c === 'BACK')     { q = q.slice(0, -1); }
+  else if (c === 'SPACE')    { q += ' '; }
+  else if (c === 'APOS')     { q += "'"; }
+  else if (c === 'HYPH')     { q += '-'; }
+  else if (c === 'DOT')      { q += '.'; }
+  else if (c === 'COMMA')    { q += ','; }
   else if (c === 'SEARCH')   { doSearch(); return; }
-  else if (c === 'MODE_NUM') { document.getElementById('keyboard').dataset.mode = 'num'; return; }
-  else if (c === 'MODE_ABC') { document.getElementById('keyboard').dataset.mode = 'alpha'; return; }
-  else q += c.toLowerCase();
+  else if (c === 'MODE_NUM') { setKbMode('num'); return; }
+  else if (c === 'MODE_ABC') { setKbMode('alpha'); return; }
+  else                       { q += c.toLowerCase(); }
   document.getElementById('qtext').textContent = q;
 });
 
 document.addEventListener('keydown', function(e) {
   if (!document.getElementById('screen-search').classList.contains('active')) return;
-  if (e.key === 'Backspace') { e.preventDefault(); q = q.slice(0,-1); document.getElementById('qtext').textContent = q; }
-  else if (e.key === 'Enter') { doSearch(); }
-  else if (e.key.length === 1 && !e.ctrlKey && !e.metaKey) { q += e.key; document.getElementById('qtext').textContent = q; }
+  if      (e.key === 'Backspace' && !e.ctrlKey) { e.preventDefault(); q = q.slice(0,-1); }
+  else if (e.key === 'Enter')                    { doSearch(); return; }
+  else if (e.key.length === 1 && !e.ctrlKey && !e.metaKey) { q += e.key; }
+  else return;
+  document.getElementById('qtext').textContent = q;
 });
 
 // ── Búsqueda ───────────────────────────────────────────────────────────────
@@ -464,7 +422,7 @@ async function doSearch() {
 }
 
 function renderResults() {
-  var el = document.getElementById('results-list');
+  var el   = document.getElementById('results-list');
   var meta = document.getElementById('results-meta');
   if (!results.length) {
     meta.textContent = '';
@@ -483,8 +441,7 @@ function renderResults() {
     return '<div class="result-item" onclick="openBook(' + i + ')">' +
       '<div class="rcover-wrap">' + cover + '</div>' +
       '<div class="rtext"><div class="rt">' + esc(b.title) + '</div>' +
-      (sub.length ? '<div class="rm">' + sub.join(' · ') + '</div>' : '') + '</div>' +
-    '</div>';
+      (sub.length ? '<div class="rm">' + sub.join(' · ') + '</div>' : '') + '</div></div>';
   }).join('');
 }
 
@@ -496,23 +453,18 @@ function showErr(msg) {
 // ── Ficha del libro ────────────────────────────────────────────────────────
 function openBook(i) {
   selBook = results[i];
-
   var img = document.getElementById('cover-img');
   img.classList.remove('loaded');
   document.getElementById('cover-emoji').style.display = '';
-  img.src = selBook.coverId
-    ? 'https://covers.openlibrary.org/b/id/' + selBook.coverId + '-M.jpg'
-    : '';
+  img.src = selBook.coverId ? 'https://covers.openlibrary.org/b/id/' + selBook.coverId + '-M.jpg' : '';
 
-  document.getElementById('book-title-el').textContent  = selBook.title  || '';
+  document.getElementById('book-title-el').textContent  = selBook.title || '';
   document.getElementById('book-author-el').textContent = (selBook.author && selBook.author !== '—') ? selBook.author : '';
 
   var starsEl = document.getElementById('book-stars-el');
   if (selBook.rating) {
     starsEl.innerHTML = starStr(selBook.rating) + '<span class="rn">' + selBook.rating + ' / 5</span>';
-  } else {
-    starsEl.textContent = '';
-  }
+  } else { starsEl.textContent = ''; }
 
   var stats = [];
   if (selBook.year  && selBook.year  !== '—') stats.push(selBook.year);
@@ -524,58 +476,45 @@ function openBook(i) {
   if (selBook.subjects && selBook.subjects.length) {
     subjEl.innerHTML = selBook.subjects.map(function(s){ return '<span class="tag">' + esc(s) + '</span>'; }).join('');
     subjEl.style.display = '';
-  } else {
-    subjEl.style.display = 'none';
-  }
+  } else { subjEl.style.display = 'none'; }
 
   var descEl = document.getElementById('book-description');
-  descEl.style.display = 'none';
-  descEl.textContent = '';
+  descEl.style.display = 'none'; descEl.textContent = '';
   if (selBook.olKey) {
     fetch('/api/meta?key=' + encodeURIComponent(selBook.olKey))
       .then(function(r){ return r.json(); })
       .then(function(d){ if (d.description) { descEl.textContent = d.description; descEl.style.display = ''; } })
       .catch(function(){});
   }
-
   goTo('book');
 }
 
-// ── Descarga automática via iframe ─────────────────────────────────────────
+// ── Descarga vía iframe ────────────────────────────────────────────────────
 function dl() {
   if (!selBook) return;
-
   var params = 'title=' + encodeURIComponent(selBook.title || '');
   if (selBook.author && selBook.author !== '—') params += '&author=' + encodeURIComponent(selBook.author);
   if (selBook.isbn)                              params += '&isbn='   + encodeURIComponent(selBook.isbn);
 
-  // Pantalla de descarga
-  document.getElementById('dl-book-title').textContent  = selBook.title  || '';
+  document.getElementById('dl-book-title').textContent  = selBook.title || '';
   document.getElementById('dl-book-author').textContent = (selBook.author && selBook.author !== '—') ? selBook.author : '';
 
-  // Mini portada en pantalla de descarga
   var dlImg = document.getElementById('dl-cover-img');
   var dlEmoji = document.getElementById('dl-cover-emoji');
   if (selBook.coverId) {
     dlImg.src = 'https://covers.openlibrary.org/b/id/' + selBook.coverId + '-S.jpg';
-    dlImg.style.display = 'block';
-    dlEmoji.style.display = 'none';
-  } else {
-    dlImg.style.display = 'none';
-    dlEmoji.style.display = '';
-  }
+    dlImg.style.display = 'block'; dlEmoji.style.display = 'none';
+  } else { dlImg.style.display = 'none'; dlEmoji.style.display = ''; }
 
   goTo('downloading');
 
-  // Descarga via iframe oculto: no navega, la página queda en pantalla
-  var old = document.getElementById('_dlframe');
+  var old = document.getElementById('_dlf');
   if (old) old.parentNode.removeChild(old);
-
-  var iframe = document.createElement('iframe');
-  iframe.id = '_dlframe';
-  iframe.style.cssText = 'position:fixed;top:-1px;left:-1px;width:1px;height:1px;opacity:0;border:none;';
-  iframe.src = '/api/download?' + params;
-  document.body.appendChild(iframe);
+  var f = document.createElement('iframe');
+  f.id = '_dlf';
+  f.style.cssText = 'position:fixed;top:-2px;left:-2px;width:1px;height:1px;opacity:0;border:none;';
+  f.src = '/api/download?' + params;
+  document.body.appendChild(f);
 }
 
 function openAnna() {
