@@ -1,0 +1,12 @@
+{
+  "name": "kinok",
+  "version": "1.0.0",
+  "description": "Kindle-optimized book finder — search and download EPUBs directly to your Kindle",
+  "main": "dev.js",
+  "scripts": {
+    "start": "node dev.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
